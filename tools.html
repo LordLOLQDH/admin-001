@@ -23,7 +23,7 @@ $("benc").onclick=()=>{try{put("bout",btoa(unescape(encodeURIComponent($("bin").
 $("bdec").onclick=()=>{try{put("bout",decodeURIComponent(escape(atob($("bin").value.trim()))))}catch(e){put("bout","Ungültige Base64-Daten")}};
 $("uenc").onclick=()=>put("uout",encodeURIComponent($("uin").value));
 $("udec").onclick=()=>{try{put("uout",decodeURIComponent($("uin").value))}catch(e){put("uout","Ungültige Kodierung")}};
-$("cnt").oninput=()=>{const s=$("cnt").value;put("cout",(s.trim()?s.trim().split(/\\s+/).length:0)+" Wörter · "+s.length+" Zeichen · "+s.replace(/\\s/g,"").length+" ohne Leerzeichen")};
+$("cnt").oninput=()=>{const s=$("cnt").value;put("cout",(s.trim()?s.trim().split(/\s+/).length:0)+" Wörter · "+s.length+" Zeichen · "+s.replace(/\s/g,"").length+" ohne Leerzeichen")};
 $("hgo").onclick=async()=>{const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode($("hin").value));put("hout",Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,"0")).join(""))};
 $("hexgo").onclick=()=>{const h=$("hex").value.replace("#","");put("hexout",/^[0-9a-f]{6}$/i.test(h)?"RGB("+parseInt(h.slice(0,2),16)+", "+parseInt(h.slice(2,4),16)+", "+parseInt(h.slice(4,6),16)+")":"Bitte 6-stelligen HEX-Wert eingeben.")};
 $("unixgo").onclick=()=>{const n=Number($("unix").value);put("unixout",Number.isFinite(n)?new Date(n*1000).toLocaleString("de-DE"):"Ungültiger Zeitstempel")};
