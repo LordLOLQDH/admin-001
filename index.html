@@ -3,32 +3,143 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#08090d">
-  <meta name="description" content="Testseite für admin-001.duckdns.org">
-  <title>ADMIN-001 | System online</title>
+  <meta name="theme-color" content="#f7f9fc">
+  <meta name="description" content="ADMIN-001 – Zentrale Übersicht für digitale Systeme und Dienste.">
+  <title>ADMIN-001 | Systemübersicht</title>
   <style>
-    :root{color-scheme:dark;--bg:#08090d;--panel:#11141c;--line:#252b38;--text:#f4f6fb;--muted:#929bad;--accent:#ff6a2a;--green:#66e3a1}
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#292035 0,transparent 55%),var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;display:grid;place-items:center;padding:24px}
-    main{width:min(760px,100%)}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{font-size:13px;font-weight:800;letter-spacing:.18em;color:#c8ceda}.status{display:inline-flex;align-items:center;gap:8px;border:1px solid #24553e;background:#10251c;color:var(--green);border-radius:99px;padding:6px 11px;font-size:12px;font-weight:700}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
-    .panel{border:1px solid var(--line);background:linear-gradient(145deg,rgba(20,23,33,.97),rgba(13,15,22,.97));border-radius:22px;padding:clamp(26px,6vw,52px);box-shadow:0 24px 90px #0008}.eyebrow{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}h1{font-size:clamp(38px,8vw,66px);line-height:1.03;letter-spacing:-.055em;margin:15px 0 18px}p{color:var(--muted);max-width:570px;margin:0}.accent{color:var(--accent)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:34px}.item{border:1px solid var(--line);border-radius:13px;padding:15px;background:#ffffff04}.label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}.value{font-size:14px;font-weight:700;margin-top:5px;overflow-wrap:anywhere}.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px;color:#697386;font-size:12px}
-    @media(max-width:520px){.top{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.panel{border-radius:17px}}
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f8faff;
+      --line: #e7ebf2;
+      --text: #172033;
+      --muted: #778197;
+      --blue: #4263eb;
+      --blue-soft: #edf1ff;
+      --green: #16865b;
+      --green-soft: #eaf8f1;
+      --shadow: 0 18px 55px rgba(31, 48, 86, .07);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 23px 0; }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 800; letter-spacing: .08em; }
+    .brand-mark {
+      display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px;
+      color: white; background: var(--blue); font-size: 13px; letter-spacing: -.04em;
+      box-shadow: 0 6px 15px rgba(66, 99, 235, .2);
+    }
+    .brand small { display: block; color: var(--muted); font-size: 10px; font-weight: 650; letter-spacing: .16em; margin-top: -2px; }
+    .status { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #d8eee3; border-radius: 99px; color: var(--green); background: var(--green-soft); font-size: 12px; font-weight: 700; white-space: nowrap; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #20a56f; box-shadow: 0 0 0 4px rgba(32,165,111,.10); }
+    main { padding: 48px 0 72px; }
+    .intro { max-width: 720px; margin-bottom: 34px; }
+    .eyebrow { color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
+    h1 { margin: 12px 0 14px; font-size: clamp(38px, 7vw,  sixty); font-size: clamp(38px, 7vw, 62px); line-height: 1.06; letter-spacing: -.055em; font-weight: 780; }
+    .lead { max-width: 620px; color: var(--muted); font-size: 16px; margin: 0; }
+    .overview { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 38px 0 15px; }
+    h2 { margin: 0; font-size: 17px; letter-spacing: -.02em; }
+    .subtle { color: var(--muted); font-size: 12px; }
+    .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .card { min-height: 154px; padding: 21px; border: 1px solid var(--line); border-radius: 17px; background: var(--surface); box-shadow: 0 5px 20px rgba(31,48,86,.025); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 19px; }
+    .icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: var(--blue); background: var(--blue-soft); font-size: 17px; font-weight: 700; }
+    .tag { padding: 4px 8px; border-radius: 99px; background: #f1f3f7; color: #69748a; font-size: 10px; font-weight: 750; }
+    .card h3 { margin: 0 0 4px; font-size: 14px; }
+    .card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .details { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 15px; margin-top: 15px; }
+    .detail { padding: 18px 20px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface); }
+    .detail-label { color: var(--muted); font-size: 11px; font-weight: 650; }
+    .detail-value { margin-top: 5px; font-size: 14px; font-weight: 750; overflow-wrap: anywhere; }
+    .detail-value.ok { color: var(--green); }
+    footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 22px 0 30px; border-top: 1px solid var(--line); color: #929bad; font-size: 11px; }
+    @media (max-width: 720px) {
+      main { padding: 34px 0 52px; }
+      .cards { grid-template-columns: 1fr; }
+      .card { min-height: auto; }
+      .details { grid-template-columns: 1fr 1fr; }
+      .details .detail:first-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 440px) {
+      .shell { width: min(100% - 30px, 1080px); }
+      header { padding: 17px 0; }
+      .brand { font-size: 12px; }
+      .brand-mark { width: 35px; height: 35px; }
+      .status { padding: 7px 9px; font-size: 10px; }
+      h1 { font-size: 41px; }
+      .lead { font-size: 14px; }
+      .details { grid-template-columns: 1fr; }
+      .details .detail:first-child { grid-column: auto; }
+      .overview { align-items: flex-start; flex-direction: column; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <div class="top"><div class="brand">ADMIN-001 <span class="accent">/</span> WEB SYSTEM</div><div class="status"><span class="dot"></span> TESTSEITE BEREIT</div></div>
-    <section class="panel">
-      <div class="eyebrow">Erster Verbindungstest</div>
-      <h1>Dein System.<br><span class="accent">Deine Domain.</span></h1>
-      <p>Diese kleine Website ist die erste Probe für das GitHub-Repository <strong>admin-001.duckdns.org</strong>. Wenn du diese Seite siehst, werden die Website-Dateien erfolgreich ausgeliefert.</p>
-      <div class="grid">
-        <div class="item"><div class="label">Projekt</div><div class="value">ADMIN-001</div></div>
-        <div class="item"><div class="label">Hosting-Dateien</div><div class="value">GitHub Pages vorbereitet</div></div>
-        <div class="item"><div class="label">Status</div><div class="value" style="color:var(--green)">HTML eingerichtet</div></div>
-        <div class="item"><div class="label">Version</div><div class="value">0.1.0 · Testaufbau</div></div>
-      </div>
+  <header>
+    <div class="shell nav">
+      <a class="brand" href="#" aria-label="ADMIN-001 Startseite">
+        <span class="brand-mark">A1</span>
+        <span>ADMIN-001<small>SYSTEM CONSOLE</small></span>
+      </a>
+      <div class="status"><span class="dot"></span> WEBSITE ERREICHBAR</div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="intro">
+      <div class="eyebrow">Zentrale Systemübersicht</div>
+      <h1>Alles im Blick.<br>Ein zentraler Ort.</h1>
+      <p class="lead">ADMIN-001 ist die zentrale Anlaufstelle für digitale Systeme, Websites, APIs und Verwaltungsoberflächen. Die Plattform wird Schritt für Schritt erweitert.</p>
     </section>
-    <div class="footer"><span>ADMIN-001 · TEST ENVIRONMENT</span><span>© 2026</span></div>
+
+    <div class="overview">
+      <h2>Systemübersicht</h2>
+      <span class="subtle">ADMIN-001 · Übersicht</span>
+    </div>
+
+    <section class="cards" aria-label="Systembereiche">
+      <article class="card">
+        <div class="card-top"><span class="icon">⌘</span><span class="tag">GEPLANT</span></div>
+        <h3>Systeme</h3>
+        <p>Zentrale Übersicht und Verwaltung verbundener Systeme.</p>
+      </article>
+      <article class="card">
+        <div class="card-top"><span class="icon">⌁</span><span class="tag">GEPLANT</span></div>
+        <h3>Websites &amp; Dienste</h3>
+        <p>Digitale Projekte und bereitgestellte Dienste an einem Ort.</p>
+      </article>
+      <article class="card">
+        <div class="card-top"><span class="icon">◇</span><span class="tag">GEPLANT</span></div>
+        <h3>APIs</h3>
+        <p>Vorbereitung einer zentralen Übersicht für Schnittstellen.</p>
+      </article>
+    </section>
+
+    <div class="overview">
+      <h2>Projektinformationen</h2>
+      <span class="subtle">Technischer Überblick</span>
+    </div>
+    <section class="details" aria-label="Projektinformationen">
+      <div class="detail"><div class="detail-label">Projekt</div><div class="detail-value">ADMIN-001</div></div>
+      <div class="detail"><div class="detail-label">Website-Status</div><div class="detail-value ok">Erreichbar</div></div>
+      <div class="detail"><div class="detail-label">Version</div><div class="detail-value">0.2.0</div></div>
+    </section>
   </main>
+
+  <footer class="shell">
+    <span>ADMIN-001 · SYSTEM CONSOLE</span>
+    <span>Version 0.2.0 · © 2026</span>
+  </footer>
 </body>
 </html>
