@@ -1,145 +1,83 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f9fc">
-  <meta name="description" content="ADMIN-001 – Zentrale Übersicht für digitale Systeme und Dienste.">
-  <title>ADMIN-001 | Systemübersicht</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f5f7fb;
-      --surface: #ffffff;
-      --surface-soft: #f8faff;
-      --line: #e7ebf2;
-      --text: #172033;
-      --muted: #778197;
-      --blue: #4263eb;
-      --blue-soft: #edf1ff;
-      --green: #16865b;
-      --green-soft: #eaf8f1;
-      --shadow: 0 18px 55px rgba(31, 48, 86, .07);
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
-      font: 15px/1.6 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: inherit; text-decoration: none; }
-    .shell { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
-    header { padding: 23px 0; }
-    .nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
-    .brand { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 800; letter-spacing: .08em; }
-    .brand-mark {
-      display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px;
-      color: white; background: var(--blue); font-size: 13px; letter-spacing: -.04em;
-      box-shadow: 0 6px 15px rgba(66, 99, 235, .2);
-    }
-    .brand small { display: block; color: var(--muted); font-size: 10px; font-weight: 650; letter-spacing: .16em; margin-top: -2px; }
-    .status { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid #d8eee3; border-radius: 99px; color: var(--green); background: var(--green-soft); font-size: 12px; font-weight: 700; white-space: nowrap; }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: #20a56f; box-shadow: 0 0 0 4px rgba(32,165,111,.10); }
-    main { padding: 48px 0 72px; }
-    .intro { max-width: 720px; margin-bottom: 34px; }
-    .eyebrow { color: var(--blue); font-size: 11px; font-weight: 800; letter-spacing: .17em; text-transform: uppercase; }
-    h1 { margin: 12px 0 14px; font-size: clamp(38px, 7vw,  sixty); font-size: clamp(38px, 7vw, 62px); line-height: 1.06; letter-spacing: -.055em; font-weight: 780; }
-    .lead { max-width: 620px; color: var(--muted); font-size: 16px; margin: 0; }
-    .overview { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 38px 0 15px; }
-    h2 { margin: 0; font-size: 17px; letter-spacing: -.02em; }
-    .subtle { color: var(--muted); font-size: 12px; }
-    .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
-    .card { min-height: 154px; padding: 21px; border: 1px solid var(--line); border-radius: 17px; background: var(--surface); box-shadow: 0 5px 20px rgba(31,48,86,.025); }
-    .card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 19px; }
-    .icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: var(--blue); background: var(--blue-soft); font-size: 17px; font-weight: 700; }
-    .tag { padding: 4px 8px; border-radius: 99px; background: #f1f3f7; color: #69748a; font-size: 10px; font-weight: 750; }
-    .card h3 { margin: 0 0 4px; font-size: 14px; }
-    .card p { margin: 0; color: var(--muted); font-size: 12px; }
-    .details { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 15px; margin-top: 15px; }
-    .detail { padding: 18px 20px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface); }
-    .detail-label { color: var(--muted); font-size: 11px; font-weight: 650; }
-    .detail-value { margin-top: 5px; font-size: 14px; font-weight: 750; overflow-wrap: anywhere; }
-    .detail-value.ok { color: var(--green); }
-    footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 22px 0 30px; border-top: 1px solid var(--line); color: #929bad; font-size: 11px; }
-    @media (max-width: 720px) {
-      main { padding: 34px 0 52px; }
-      .cards { grid-template-columns: 1fr; }
-      .card { min-height: auto; }
-      .details { grid-template-columns: 1fr 1fr; }
-      .details .detail:first-child { grid-column: 1 / -1; }
-    }
-    @media (max-width: 440px) {
-      .shell { width: min(100% - 30px, 1080px); }
-      header { padding: 17px 0; }
-      .brand { font-size: 12px; }
-      .brand-mark { width: 35px; height: 35px; }
-      .status { padding: 7px 9px; font-size: 10px; }
-      h1 { font-size: 41px; }
-      .lead { font-size: 14px; }
-      .details { grid-template-columns: 1fr; }
-      .details .detail:first-child { grid-column: auto; }
-      .overview { align-items: flex-start; flex-direction: column; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f9ff">
+<meta name="description" content="ADMIN-001 – Die zentrale Plattform für digitale Systeme und Dienste.">
+<title>ADMIN-001 | Control Center</title>
+<style>
+:root{color-scheme:light;--bg:#f6f8fc;--paper:#fff;--paper2:#fbfcff;--line:#e8edf5;--ink:#172033;--muted:#78849a;--blue:#4263eb;--blue2:#3154d8;--blueSoft:#edf1ff;--violet:#7657d8;--green:#16865b;--greenSoft:#eaf8f1;--shadow:0 18px 55px rgba(31,48,86,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.hidden{display:none!important}.wrap{width:min(1160px,calc(100% - 40px));margin:auto}
+header{height:76px;background:rgba(255,255,255,.88);border-bottom:1px solid var(--line);backdrop-filter:blur(14px);position:sticky;top:0;z-index:10}.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:.06em;font-size:14px}.brandmark{width:39px;height:39px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(145deg,#5475f5,#7657d8);color:white;box-shadow:0 7px 17px #4263eb33;font-size:13px;letter-spacing:-.04em}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:.18em;margin-top:-2px}.navright{display:flex;align-items:center;gap:10px}.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:99px;color:#526078;font-size:12px;font-weight:700}.led{width:7px;height:7px;border-radius:50%;background:#20a56f;box-shadow:0 0 0 4px #20a56f19}.button{border:0;border-radius:11px;padding:11px 16px;font-weight:750;font-size:13px;transition:.18s ease}.button:hover{transform:translateY(-1px)}.primary{background:var(--blue);color:white;box-shadow:0 7px 16px #4263eb2b}.primary:hover{background:var(--blue2)}.secondary{background:#fff;border:1px solid var(--line);color:#39465d}.quiet{background:var(--blueSoft);color:var(--blue)}.danger{background:#fff0f0;color:#c34444}
+main{padding:42px 0 70px}.eyebrow{color:var(--blue);font-size:10px;font-weight:850;letter-spacing:.18em;text-transform:uppercase}.hero{position:relative;overflow:hidden;padding:40px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(120deg,#fff 0%,#fff 58%,#f1f4ff 100%);box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:-90px;top:-150px;background:radial-gradient(circle,#dfe6ff 0%,#eef1ff88 50%,transparent 70%)}.hero>*{position:relative;z-index:1}.hero h1{font-size:clamp(36px,6vw,62px);line-height:1.04;letter-spacing:-.06em;margin:12px 0 14px;max-width:720px}.hero p{max-width:650px;color:var(--muted);margin:0;font-size:15px}.heroactions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
+.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:34px 0 15px}.sectionhead h2{font-size:18px;letter-spacing:-.03em;margin:0}.hint{font-size:12px;color:var(--muted)}.modegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}.mode{padding:24px;border:1px solid var(--line);border-radius:19px;background:#fff;text-align:left;box-shadow:0 5px 22px #1f305608;transition:.2s}.mode:hover{transform:translateY(-3px);border-color:#cbd5ff;box-shadow:var(--shadow)}.modeicon{width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:var(--blueSoft);color:var(--blue);font-size:20px;margin-bottom:17px}.mode h3{margin:0 0 5px;font-size:16px}.mode p{margin:0 0 17px;color:var(--muted);font-size:13px}.modefoot{display:flex;align-items:center;justify-content:space-between;color:var(--blue);font-size:12px;font-weight:800}
+.dashboardtop{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:25px}.dashboardtop h1{margin:7px 0 5px;font-size:clamp(29px,4vw,42px);letter-spacing:-.05em;line-height:1.1}.dashboardtop p{margin:0;color:var(--muted);font-size:13px}.dashactions{display:flex;gap:9px;flex-wrap:wrap}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.stat{padding:18px 19px;background:#fff;border:1px solid var(--line);border-radius:15px}.statlabel{font-size:11px;color:var(--muted);font-weight:650}.statvalue{font-size:27px;line-height:1.2;letter-spacing:-.04em;font-weight:820;margin-top:7px}.statnote{font-size:10px;color:var(--green);margin-top:5px;font-weight:700}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 13px}.search{width:min(330px,100%);border:1px solid var(--line);border-radius:10px;padding:10px 13px;background:#fff;outline:none;color:var(--ink)}.search:focus,input:focus,textarea:focus{border-color:#9aabff!important;box-shadow:0 0 0 3px #4263eb16}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:19px;min-width:0;transition:.18s}.card:hover{border-color:#d3dcfa;box-shadow:0 9px 24px #1f30560a}.cardtop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}.cardicon{width:37px;height:37px;border-radius:12px;background:var(--blueSoft);display:grid;place-items:center;color:var(--blue);font-size:17px}.tag{padding:4px 8px;border-radius:99px;background:#f1f3f7;color:#6c7890;font-size:9px;font-weight:850;letter-spacing:.04em}.tag.live{background:var(--greenSoft);color:var(--green)}.card h3{font-size:14px;margin:0 0 5px}.card p{font-size:12px;color:var(--muted);margin:0;min-height:38px}.cardbottom{display:flex;align-items:center;justify-content:space-between;margin-top:17px;padding-top:13px;border-top:1px solid #f0f2f7}.cardbottom span{font-size:10px;color:var(--muted)}.cardbottom button{border:0;background:transparent;color:var(--blue);font-size:11px;font-weight:800;padding:4px}.empty{padding:32px;text-align:center;color:var(--muted);border:1px dashed #d9dfeb;border-radius:15px;background:#fff}
+.panel{padding:20px;border:1px solid var(--line);border-radius:16px;background:#fff;margin-top:18px}.panel h3{margin:0 0 5px;font-size:14px}.panel p{margin:0;color:var(--muted);font-size:12px}.notice{padding:13px 15px;border-radius:12px;background:#fff8e9;color:#8a6825;font-size:11px;margin-top:18px;border:1px solid #f4e7c9}
+footer{border-top:1px solid var(--line);padding:22px 0 28px;color:#929bad;font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+dialog{border:1px solid var(--line);border-radius:18px;padding:0;width:min(460px,calc(100% - 28px));box-shadow:0 25px 80px #17203330}dialog::backdrop{background:#17203355;backdrop-filter:blur(3px)}.modal{padding:23px}.modal h2{margin:0 0 5px;font-size:20px}.modal>p{color:var(--muted);font-size:12px;margin:0 0 19px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:11px;font-weight:750;color:#536078}.field input,.field textarea,.field select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:none;color:var(--ink)}.field textarea{resize:vertical;min-height:76px}.modalactions{display:flex;justify-content:flex-end;gap:9px;margin-top:19px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding:30px}}
+@media(max-width:560px){.wrap{width:calc(100% - 28px)}header{height:66px}.brand{font-size:12px}.brandmark{width:35px;height:35px}.navright .pill{display:none}main{padding:25px 0 50px}.hero{padding:25px 21px;border-radius:19px}.hero h1{font-size:39px}.hero p{font-size:13px}.modegrid,.cards{grid-template-columns:1fr}.mode{padding:20px}.stats{gap:9px}.stat{padding:14px}.statvalue{font-size:23px}.dashboardtop{flex-direction:column}.toolbar{align-items:stretch;flex-direction:column}.search{width:100%}.sectionhead{align-items:flex-start;flex-direction:column}}
+</style>
 </head>
 <body>
-  <header>
-    <div class="shell nav">
-      <a class="brand" href="#" aria-label="ADMIN-001 Startseite">
-        <span class="brand-mark">A1</span>
-        <span>ADMIN-001<small>SYSTEM CONSOLE</small></span>
-      </a>
-      <div class="status"><span class="dot"></span> WEBSITE ERREICHBAR</div>
-    </div>
-  </header>
-
-  <main class="shell">
-    <section class="intro">
-      <div class="eyebrow">Zentrale Systemübersicht</div>
-      <h1>Alles im Blick.<br>Ein zentraler Ort.</h1>
-      <p class="lead">ADMIN-001 ist die zentrale Anlaufstelle für digitale Systeme, Websites, APIs und Verwaltungsoberflächen. Die Plattform wird Schritt für Schritt erweitert.</p>
-    </section>
-
-    <div class="overview">
-      <h2>Systemübersicht</h2>
-      <span class="subtle">ADMIN-001 · Übersicht</span>
-    </div>
-
-    <section class="cards" aria-label="Systembereiche">
-      <article class="card">
-        <div class="card-top"><span class="icon">⌘</span><span class="tag">GEPLANT</span></div>
-        <h3>Systeme</h3>
-        <p>Zentrale Übersicht und Verwaltung verbundener Systeme.</p>
-      </article>
-      <article class="card">
-        <div class="card-top"><span class="icon">⌁</span><span class="tag">GEPLANT</span></div>
-        <h3>Websites &amp; Dienste</h3>
-        <p>Digitale Projekte und bereitgestellte Dienste an einem Ort.</p>
-      </article>
-      <article class="card">
-        <div class="card-top"><span class="icon">◇</span><span class="tag">GEPLANT</span></div>
-        <h3>APIs</h3>
-        <p>Vorbereitung einer zentralen Übersicht für Schnittstellen.</p>
-      </article>
-    </section>
-
-    <div class="overview">
-      <h2>Projektinformationen</h2>
-      <span class="subtle">Technischer Überblick</span>
-    </div>
-    <section class="details" aria-label="Projektinformationen">
-      <div class="detail"><div class="detail-label">Projekt</div><div class="detail-value">ADMIN-001</div></div>
-      <div class="detail"><div class="detail-label">Website-Status</div><div class="detail-value ok">Erreichbar</div></div>
-      <div class="detail"><div class="detail-label">Version</div><div class="detail-value">0.2.0</div></div>
-    </section>
-  </main>
-
-  <footer class="shell">
-    <span>ADMIN-001 · SYSTEM CONSOLE</span>
-    <span>Version 0.2.0 · © 2026</span>
-  </footer>
+<header><div class="wrap nav">
+<a class="brand" href="#" onclick="showHome();return false"><span class="brandmark">A1</span><span>ADMIN-001<small>CONTROL CENTER</small></span></a>
+<div class="navright"><span class="pill"><span class="led"></span> System erreichbar</span><button class="button secondary" id="topMode" onclick="showHome()">Modus wechseln</button></div>
+</div></header>
+<main class="wrap">
+<section id="home">
+<div class="hero"><div class="eyebrow">Ein Ort. Alle Systeme.</div><h1>Deine digitale Welt.<br>Unter Kontrolle.</h1><p>ADMIN-001 bündelt digitale Projekte, Websites und Dienste in einer klaren, zentralen Oberfläche. Wähle aus, wie du die Plattform nutzen möchtest.</p>
+<div class="heroactions"><span class="pill"><span class="led"></span> Plattform online</span><span class="pill">Version 1.0.0</span></div></div>
+<div class="sectionhead"><div><h2>Wie möchtest du fortfahren?</h2><div class="hint">Wähle einen Bereich aus.</div></div></div>
+<div class="modegrid">
+<button class="mode" onclick="openGuest()"><span class="modeicon">◉</span><h3>Gastmodus</h3><p>Öffentliche Informationen ansehen und verfügbare Bereiche entdecken.</p><span class="modefoot">Als Gast fortfahren <span>→</span></span></button>
+<button class="mode" onclick="openAdmin()"><span class="modeicon">⌘</span><h3>Adminmodus</h3><p>Die Verwaltungsoberfläche öffnen, Projekte organisieren und Einträge bearbeiten.</p><span class="modefoot">Verwaltung öffnen <span>→</span></span></button>
+</div>
+<div class="notice">Hinweis: Der Adminmodus dieser ersten Version speichert Änderungen nur lokal in diesem Browser. Eine sichere Anmeldung und gemeinsame Datenbank werden später mit einem Backend ergänzt.</div>
+</section>
+<section id="dashboard" class="hidden">
+<div class="dashboardtop"><div><div class="eyebrow" id="modeLabel">GASTBEREICH</div><h1 id="dashTitle">Willkommen.</h1><p id="dashSubtitle">Öffentliche Systemübersicht von ADMIN-001.</p></div><div class="dashactions"><button class="button secondary" onclick="showHome()">← Modus wechseln</button><button class="button primary hidden" id="addButton" onclick="openAdd()">+ Projekt hinzufügen</button></div></div>
+<div class="stats">
+<div class="stat"><div class="statlabel">Projekte gesamt</div><div class="statvalue" id="statTotal">3</div><div class="statnote">In dieser Übersicht</div></div>
+<div class="stat"><div class="statlabel">Aktiv</div><div class="statvalue" id="statLive">1</div><div class="statnote">Als online markiert</div></div>
+<div class="stat"><div class="statlabel">In Planung</div><div class="statvalue" id="statPlan">2</div><div class="statnote">Noch nicht veröffentlicht</div></div>
+<div class="stat"><div class="statlabel">Bereiche</div><div class="statvalue">03</div><div class="statnote">Systeme · Web · APIs</div></div>
+</div>
+<div class="sectionhead"><div><h2 id="listTitle">Öffentliche Projekte</h2><div class="hint" id="listHint">Verfügbare Systeme und Dienste</div></div><span class="pill"><span class="led"></span> Live-Übersicht</span></div>
+<div class="toolbar"><input class="search" id="search" placeholder="Projekte durchsuchen…" oninput="renderCards()"><span class="hint" id="resultCount">3 Einträge</span></div>
+<div class="cards" id="cards"></div>
+<div id="adminNote" class="notice hidden">Lokaler Adminmodus: Änderungen werden auf diesem Gerät gespeichert. Diese Oberfläche besitzt noch keine echte Benutzeranmeldung und darf nicht als sicherer Schutz für vertrauliche Daten betrachtet werden.</div>
+<div class="panel"><h3>Über ADMIN-001</h3><p>ADMIN-001 ist eine zentrale, modular erweiterbare Plattform zur Übersicht und Verwaltung digitaler Projekte. Weitere Funktionen werden schrittweise ergänzt.</p></div>
+</section>
+</main>
+<footer class="wrap"><span>ADMIN-001 · CONTROL CENTER</span><span>Version 1.0.0 · © 2026</span></footer>
+<dialog id="addDialog"><form class="modal" id="projectForm"><h2>Projekt hinzufügen</h2><p>Erstelle einen neuen Eintrag in deiner lokalen Übersicht.</p>
+<div class="field"><label for="pName">Projektname</label><input id="pName" required maxlength="50" placeholder="z. B. Website Portal"></div>
+<div class="field"><label for="pDesc">Beschreibung</label><textarea id="pDesc" required maxlength="180" placeholder="Was macht dieses Projekt?"></textarea></div>
+<div class="field"><label for="pType">Bereich</label><select id="pType"><option>Website</option><option>System</option><option>API</option><option>Tool</option></select></div>
+<div class="field"><label for="pStatus">Status</label><select id="pStatus"><option>Geplant</option><option>Online</option><option>In Arbeit</option></select></div>
+<div class="modalactions"><button type="button" class="button secondary" onclick="closeAdd()">Abbrechen</button><button class="button primary" type="submit">Projekt speichern</button></div></form></dialog>
+<script>
+const seed=[
+{id:1,name:"ADMIN-001",desc:"Zentrale Plattform für digitale Systeme und Verwaltungsbereiche.",type:"System",status:"Online",public:true},
+{id:2,name:"Websites & Dienste",desc:"Übersicht und Organisation verbundener Websites und digitaler Dienste.",type:"Website",status:"Geplant",public:true},
+{id:3,name:"API-Zentrale",desc:"Zentrale Übersicht für Schnittstellen und verbundene Dienste.",type:"API",status:"Geplant",public:true}
+];
+let projects=loadProjects(),admin=false;
+function loadProjects(){try{const x=JSON.parse(localStorage.getItem("admin001-projects"));return Array.isArray(x)?x:seed.slice()}catch{return seed.slice()}}
+function saveProjects(){try{localStorage.setItem("admin001-projects",JSON.stringify(projects))}catch{}}
+function showHome(){document.getElementById("home").classList.remove("hidden");document.getElementById("dashboard").classList.add("hidden");document.getElementById("topMode").classList.add("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+function openGuest(){admin=false;openDashboard()}
+function openAdmin(){admin=true;openDashboard()}
+function openDashboard(){document.getElementById("home").classList.add("hidden");document.getElementById("dashboard").classList.remove("hidden");document.getElementById("topMode").classList.remove("hidden");document.getElementById("modeLabel").textContent=admin?"ADMINBEREICH":"GASTBEREICH";document.getElementById("dashTitle").textContent=admin?"Verwaltung.":"Willkommen.";document.getElementById("dashSubtitle").textContent=admin?"Verwalte die Projekte deiner ADMIN-001-Übersicht.":"Öffentliche Systemübersicht von ADMIN-001.";document.getElementById("addButton").classList.toggle("hidden",!admin);document.getElementById("adminNote").classList.toggle("hidden",!admin);document.getElementById("listTitle").textContent=admin?"Alle Projekte":"Öffentliche Projekte";document.getElementById("listHint").textContent=admin?"Lokale Projektverwaltung":"Verfügbare Systeme und Dienste";document.getElementById("search").value="";renderCards();window.scrollTo({top:0,behavior:"smooth"})}
+function renderCards(){const q=(document.getElementById("search").value||"").toLowerCase();const visible=projects.filter(p=>(admin||p.public)&&[p.name,p.desc,p.type,p.status].join(" ").toLowerCase().includes(q));document.getElementById("statTotal").textContent=projects.length;document.getElementById("statLive").textContent=projects.filter(p=>p.status==="Online").length;document.getElementById("statPlan").textContent=projects.filter(p=>p.status!=="Online").length;document.getElementById("resultCount").textContent=visible.length+" Einträge";const root=document.getElementById("cards");if(!visible.length){root.innerHTML='<div class="empty">Keine passenden Projekte gefunden.</div>';return}root.innerHTML=visible.map(p=>'<article class="card"><div class="cardtop"><span class="cardicon">'+(p.type==="API"?"⌁":p.type==="Website"?"▣":p.type==="Tool"?"✳":"⌘")+'</span><span class="tag '+(p.status==="Online"?"live":"")+'">'+esc(p.status.toUpperCase())+'</span></div><h3>'+esc(p.name)+'</h3><p>'+esc(p.desc)+'</p><div class="cardbottom"><span>'+esc(p.type)+(p.public?" · Öffentlich":" · Privat")+'</span>'+(admin?'<button onclick="togglePublic('+p.id+')">'+(p.public?"Verbergen":"Veröffentlichen")+'</button><button onclick="removeProject('+p.id+')">Löschen</button>':'<span>ADMIN-001</span>')+'</div></article>').join("")}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function openAdd(){document.getElementById("projectForm").reset();document.getElementById("addDialog").showModal()}
+function closeAdd(){document.getElementById("addDialog").close()}
+document.getElementById("projectForm").addEventListener("submit",e=>{e.preventDefault();projects.unshift({id:Date.now(),name:document.getElementById("pName").value.trim(),desc:document.getElementById("pDesc").value.trim(),type:document.getElementById("pType").value,status:document.getElementById("pStatus").value,public:true});saveProjects();closeAdd();renderCards()});
+function togglePublic(id){projects=projects.map(p=>p.id===id?{...p,public:!p.public}:p);saveProjects();renderCards()}
+function removeProject(id){if(!confirm("Dieses Projekt wirklich löschen?"))return;projects=projects.filter(p=>p.id!==id);saveProjects();renderCards()}
+</script>
 </body>
 </html>
